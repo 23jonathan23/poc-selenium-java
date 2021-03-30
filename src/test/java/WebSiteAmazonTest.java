@@ -1,8 +1,15 @@
 import static org.junit.Assert.assertEquals;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+
 public class WebSiteAmazonTest {
 
     @BeforeClass
@@ -11,9 +18,9 @@ public class WebSiteAmazonTest {
     }
     
     @Test
-    public void When_to_navigate_to_website_and_get_title_page_then_must_be_return_title_page_expected() {
+    public void When_to_navigate_to_website_and_get_title_page_then_must_be_return_title_page_expected() throws IOException {
         //Arrange
-        var expectedTitle = "Amazon.com.br | Compre livros, Kindle, Echo, Fire Tv e mais.";
+        var expectedTitle = getTitle();
         
         WebDriver driver = new ChromeDriver();
         
@@ -25,5 +32,12 @@ public class WebSiteAmazonTest {
 
         //Assert
         assertEquals(expectedTitle, actualTitle);
+    }
+
+    private String getTitle() throws IOException {
+        var file = new File("src/test/java/utils/arquivo.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+
+        return br.readLine();
     }
 }
